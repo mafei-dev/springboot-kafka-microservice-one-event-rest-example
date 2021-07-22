@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: customerOrderModule
+          uri: lb://CUSTOMER-ORDER-SERVICE
+          predicates:
+            - Path=/customer-order/**
+        - id: paymentModule
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/**
+
+server:
+  port: 8080
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8083/eureka
+  instance:
+    prefer-ip-address: true
